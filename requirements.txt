@@ -1,0 +1,9 @@
+Flask
+gunicorn
+futures
+farm-haystack
+fastapi
+s3fs
+boto3
+fitz
+urllib
