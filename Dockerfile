@@ -1,5 +1,18 @@
-FROM continuumio/anaconda3
+FROM python:3.7.4-stretch
 
+RUN apt-get update && apt-get install -y \
+    curl  \
+    git  \
+    pkg-config  \
+    cmake \
+    libpoppler-cpp-dev  \
+    tesseract-ocr  \
+    libtesseract-dev  \
+    poppler-utils && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget --no-check-certificate https://dl.xpdfreader.com/xpdf-tools-linux-4.03.tar.gz && \
+    tar -xvf xpdf-tools-linux-4.03.tar.gz && cp xpdf-tools-linux-4.03/bin64/pdftotext /usr/local/bin
 
 RUN apt-get update \
  && apt-get install -y locales \
@@ -30,16 +43,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copying src code to Container
 COPY . /usr/src/app
 
-RUN chmod -R 777 /usr/src/app/data/input
-RUN chmod -R 777 /usr/src/app/data/squad20
-RUN chmod -R 777 /usr/src/app/data/train_model
-RUN chmod -R 777 /usr/src/app/data
-RUN chmod -R 777 /usr/src/app
-RUN chmod -R 777 /usr/src
+# RUN chmod -R 777 /usr/src/app/data/input
+# RUN chmod -R 777 /usr/src/app/data/squad20
+# RUN chmod -R 777 /usr/src/app/data/train_model
+# RUN chmod -R 777 /usr/src/app/data
+# RUN chmod -R 777 /usr/src/app
+# RUN chmod -R 777 /usr/src
 
 # Application Environment variables
 #ENV APP_ENV development
-ENV PORT 8777
+ENV PORT 8001
 
 # Exposing Ports
 EXPOSE $PORT
@@ -48,4 +61,6 @@ EXPOSE $PORT
 VOLUME ["/app-data"]
 
 # Running Python Application
-CMD gunicorn -b :$PORT -c gunicorn.conf.py main:app
+# CMD gunicorn -b :$PORT -c gunicorn.conf.py main:app
+
+CMD [ "python", "app.py" ]

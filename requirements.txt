@@ -1,9 +1,11 @@
 Flask
 gunicorn
+uvicorn
 futures
 farm-haystack
+flask-cors
 fastapi
 s3fs
 boto3
+PyMuPDF==1.16.14
 fitz
-urllib
