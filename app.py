@@ -18,7 +18,7 @@ import s3fs
 import boto3
 import fitz
 
-s3 = boto3.client('s3', aws_access_key_id='AKIAUOJDVU6XYMY4EPMZ' , aws_secret_access_key='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')
+s3 = boto3.client('s3', aws_access_key_id='' , aws_secret_access_key='')
 
 converter = ImageToTextConverter(remove_numeric_tables=True, valid_languages=["eng"])
 
@@ -157,7 +157,7 @@ def generatequestion(outputquestionbucket,customerName,filename):
         print("The file does not exist")
     list_dataframe = pd.DataFrame(result)
     bytes_to_write = list_dataframe.to_csv(None).encode()
-    fs = s3fs.S3FileSystem(anon=False, key='AKIAUOJDVU6XYMY4EPMZ', secret='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')
+    fs = s3fs.S3FileSystem(anon=False, key='', secret='')
     with fs.open('s3://'+ outputquestionbucket +'/'+ customerName + '/' + filename + '.csv', 'wb') as f:
         f.write(bytes_to_write)
 
