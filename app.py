@@ -97,7 +97,7 @@ async def QuestionGenerator(customerName: str, filename: str, inputfilebucket: s
             print("The file does not exist")
         list_dataframe = pd.DataFrame(result)
         bytes_to_write = list_dataframe.to_csv(None).encode()
-        fs = s3fs.S3FileSystem(anon=False, key='AKIAUOJDVU6XYMY4EPMZ', secret='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')
+        fs = s3fs.S3FileSystem(anon=False, key='', secret='')
         with fs.open('s3://'+ outputquestionbucket +'/'+ customerName + '/' + filename + '.csv', 'wb') as f:
             f.write(bytes_to_write)
         return list_dataframe
